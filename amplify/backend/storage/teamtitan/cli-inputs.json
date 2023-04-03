@@ -1,0 +1,18 @@
+{
+  "resourceName": "teamtitan",
+  "policyUUID": "2f25211e",
+  "bucketName": "seniorproject45b816fab3b1420a884410dc409345e5",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

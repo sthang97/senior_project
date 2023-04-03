@@ -1,0 +1,42 @@
+/* Dashboard.css */
+.dashboard {
+  padding: 16px;
+}
+
+.dashboard h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.sign-out-button {
+  background-color: #ff7f7f;
+  color: white;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  float: right;
+  margin-top: -8px;
+}
+
+.navigation-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.nav-button {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.nav-button:hover {
+  background-color: #0056b3;
+}

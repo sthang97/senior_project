@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-seniorproject-dev-170136-authRole",
+      "UnauthRoleArn": "arn:aws:iam::004056483117:role/amplify-seniorproject-dev-170136-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::004056483117:role/amplify-seniorproject-dev-170136-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-seniorproject-dev-170136-deployment",
+      "UnauthRoleName": "amplify-seniorproject-dev-170136-unauthRole",
+      "StackName": "amplify-seniorproject-dev-170136",
+      "StackId": "arn:aws:cloudformation:us-east-1:004056483117:stack/amplify-seniorproject-dev-170136/1cec50d0-cdb4-11ed-ba33-0a7978b7fcdf",
+      "AmplifyAppId": "di0f106l0kpma"
+    },
+    "categories": {
+      "auth": {
+        "seniorprojectc92b1068": {}
+      },
+      "storage": {
+        "teamtitan": {}
+      },
+      "function": {
+        "getImagesFunction": {
+          "deploymentBucketName": "amplify-seniorproject-dev-170136-deployment",
+          "s3Key": "amplify-builds/getImagesFunction-3058697a756c744c6674-build.zip"
+        }
+      },
+      "api": {
+        "teamtitanapi": {}
+      }
+    }
+  }
+}

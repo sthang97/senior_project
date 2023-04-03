@@ -1,0 +1,17 @@
+/* Camera.css */
+.camera {
+    padding: 16px;
+  }
+  
+  .camera h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .camera-placeholder {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    border: 1px solid #ccc;
+  }
+  
