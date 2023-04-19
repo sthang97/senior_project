@@ -1,42 +1,63 @@
-/* Dashboard.css */
-.dashboard {
-  padding: 16px;
-}
-
-.dashboard h1 {
-  font-size: 24px;
-  margin-bottom: 16px;
-}
-
-.sign-out-button {
-  background-color: #ff7f7f;
-  color: white;
-  font-weight: bold;
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-  float: right;
-  margin-top: -8px;
-}
-
-.navigation-buttons {
+.account-container {
   display: flex;
-  gap: 16px;
-  margin-top: 16px;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-.nav-button {
-  background-color: #007bff;
+.account-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-holder {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  max-width: 400px;
+  width: 100%;
+}
+
+label {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 5px;
+  width: 100%;
+}
+
+.avatar-preview {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: auto;
+}
+
+.avatar-section {
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #2088ff;
   color: white;
-  font-weight: bold;
-  padding: 8px 16px;
-  border: none;
+  padding: 10px;
   cursor: pointer;
-  border-radius: 4px;
-  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
-.nav-button:hover {
-  background-color: #0056b3;
+button:hover {
+  background-color: #0e7bea;
 }

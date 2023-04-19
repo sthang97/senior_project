@@ -7,7 +7,7 @@ const About = () => {
       <h1 className="about-title">Team Titan</h1>
       <img
         className="about-image"
-        src={`${process.env.PUBLIC_URL}/conquer.png`}
+        src={`${process.env.PUBLIC_URL}/GroupPicture.png`}
         alt="conquer"
         width="1280"
         height="720"
@@ -21,14 +21,14 @@ const About = () => {
       <div className="about-image-container">
         <img
           className="about-image"
-          src={`${process.env.PUBLIC_URL}/kobe-1.png`}
+          src={`${process.env.PUBLIC_URL}/heatmap1.png`}
           alt="kobe-1"
           width="580"
           height="420"
         />
         <img
           className="about-image"
-          src={`${process.env.PUBLIC_URL}/kobe-1.png`}
+          src={`${process.env.PUBLIC_URL}/heatmap2.png`}
           alt="kobe-1"
           width="580"
           height="220"

@@ -13,8 +13,8 @@ function App() {
       <Navbar />
       <div className="container">
        <Routes>
-          <Route path="/" element={<Dashboard/>} />
-          <Route path="/about" element={<About/>} />
+          <Route path="/" element={<About/>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/data" element={<Data/>} />
           <Route path="/camera" element={<Camera/>} />
         </Routes>
