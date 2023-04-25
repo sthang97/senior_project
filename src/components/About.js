@@ -1,13 +1,25 @@
 import React from 'react';
 import './About.css';
+import { useEffect } from 'react';
+import { Auth } from 'aws-amplify';
 
 const About = () => {
+
+  useEffect(() => {
+    Auth.currentCredentials()
+      .then((data) => {
+        console.log('Cognito Identity ID:', data.identityId);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+
   return (
     <div className="about-container">
       <h1 className="about-title">Team Titan</h1>
       <img
         className="about-image"
-        src={`${process.env.PUBLIC_URL}/GroupPicture.png`}
+        src={`${process.env.PUBLIC_URL}/group.png`}
         alt="conquer"
         width="1280"
         height="720"

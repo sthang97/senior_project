@@ -1,17 +1,40 @@
-/* Camera.css */
 .camera {
-    padding: 16px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.floorplan {
+  max-width: 100%;
+}
+
+.camera-indicator {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.idle {
+  background-color: green;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
   }
-  
-  .camera h1 {
-    font-size: 24px;
-    margin-bottom: 16px;
+  50% {
+    opacity: 0;
   }
-  
-  .camera-placeholder {
-    width: 100%;
-    max-width: 640px;
-    height: auto;
-    border: 1px solid #ccc;
+  100% {
+    opacity: 1;
   }
-  
+}
+
+.fever-detected {
+  background-color: red;
+  animation: blink 1s infinite;
+}
+
+

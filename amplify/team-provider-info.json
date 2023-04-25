@@ -22,6 +22,10 @@
         "getImagesFunction": {
           "deploymentBucketName": "amplify-seniorproject-dev-170136-deployment",
           "s3Key": "amplify-builds/getImagesFunction-3058697a756c744c6674-build.zip"
+        },
+        "saveIoTDataToDynamoDB": {
+          "deploymentBucketName": "amplify-seniorproject-dev-170136-deployment",
+          "s3Key": "amplify-builds/saveIoTDataToDynamoDB-4a4f7a5950786b6e6a2f-build.zip"
         }
       },
       "api": {

@@ -5,7 +5,7 @@ import Data from './components/Data';
 import About from './components/About';
 import Camera from './components/Camera';
 import Navbar from './components/Navbar';
-
+import Message from './components/Message';
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/data" element={<Data/>} />
           <Route path="/camera" element={<Camera/>} />
+          <Route path="/message" element={<Message />} />
         </Routes>
       </div>
     </div>

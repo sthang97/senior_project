@@ -1,66 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Camera.css';
-import { API } from 'aws-amplify';
 
 const Camera = () => {
-  const [cameraStatuses, setCameraStatuses] = useState([
-    { id: 1, status: 'idle', x: '80%', y: '70%' },
-    { id: 2, status: 'idle', x: '30%', y: '60%' },
-    { id: 3, status: 'idle', x: '60%', y: '30%' },
-  ]);
-  const [lastFetchedImages, setLastFetchedImages] = useState({});
+  const [feverDetected, setFeverDetected] = useState(false);
+  const [message, setMessage] = useState('');
+  const [lastFetchTime, setLastFetchTime] = useState(0);
+  const navigate = useNavigate();
+
+  const latestDataTime = (dataArray) => {
+    let latestTime = 0;
+    dataArray.forEach((data) => {
+      if (parseInt(data.time) > latestTime) {
+        latestTime = parseInt(data.time);
+      }
+    });
+    return latestTime;
+  };
 
   useEffect(() => {
-    const intervalId = setInterval(async () => {
-      // Replace with your actual API call
-      const response = await API.put("teamtitanapi", "/getImages", {});
-      setLastFetchedImages(response.lastFetchedImages);
+    const fetchData = async () => {
+      try {
+        const apiUrl = 'https://ndm4ne7wwc.execute-api.us-east-1.amazonaws.com/dev/iotdata';
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
-      // Update camera statuses
-      setCameraStatuses((prevStatuses) =>
-        prevStatuses.map((status) => ({
-          ...status,
-          status: response.status[status.id] || 'idle',
-        })),
-      );
+        const latestTime = latestDataTime(data);
+
+        let feverFound = false;
+
+        data.forEach((item) => {
+          if (item.payload.includes('Fever detected') && parseInt(item.time) === latestTime) {
+            feverFound = true;
+            setMessage(item.payload);
+            return;
+          }
+        });
+
+        if (feverFound && latestTime > lastFetchTime) {
+          setFeverDetected(true);
+          setLastFetchTime(latestTime);
+        } else {
+          setFeverDetected(false);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    // Fetch data every 5 seconds
+    const interval = setInterval(() => {
+      fetchData();
     }, 5000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [lastFetchTime]);
 
-  const containerStyle = {
-    backgroundImage: `url('${process.env.PUBLIC_URL}/FloorPlanMap.png')`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    width: '100%',
-    height: '100vh',
+  const handleClick = () => {
+    if (feverDetected) {
+      navigate('/message', { state: { message } });
+    }
   };
 
   return (
-    <div style={containerStyle}>
-      {cameraStatuses.map((cameraStatus) => (
-        <div
-          key={cameraStatus.id}
-          style={{
-            position: 'absolute',
-            top: cameraStatus.y,
-            left: cameraStatus.x,
-            transform: 'translate(-50%, -50%)',
-            backgroundColor:
-              cameraStatus.status === 'feverDetected' ? 'red' : 'green',
-            width: '30px',
-            height: '30px',
-            borderRadius: '50%',
-            animation:
-              cameraStatus.status === 'feverDetected' ? 'blinking 2s infinite' : '',
-          }}
-          onClick={() => {
-            if (cameraStatus.status === 'feverDetected') {
-              window.open(lastFetchedImages[cameraStatus.id], '_blank');
-            }
-          }}
-        />
-      ))}
+    <div className="camera">
+      <img src="/FloorPlanMap.png" alt="Floor Plan" className="floorplan" />
+      <div
+        className={`camera-indicator ${feverDetected ? 'fever-detected' : 'idle'}`}
+        onClick={handleClick}
+        style={{ top: '31%', left: '42%' }}
+      ></div>
+      <div
+        className="camera-indicator idle"
+        style={{ top: '20%', left: '10%' }}
+      ></div>
+      <div
+        className="camera-indicator idle"
+        style={{ top: '10%', left: '60%' }}
+      ></div>
     </div>
   );
 };
