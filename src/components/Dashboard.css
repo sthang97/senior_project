@@ -1,63 +1,27 @@
-.account-container {
+.dashboard {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+  flex-direction: row;
+  padding: 20px;
 }
 
-.account-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.message-list {
+  flex: 1;
+  max-width: 50%;
+  overflow-y: auto;
+  border-right: 1px solid #ccc;
+  padding-right: 20px;
 }
 
-.text-holder {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  max-width: 400px;
-  width: 100%;
-}
-
-label {
-  width: 100%;
-  text-align: left;
-  margin-bottom: 5px;
-}
-
-input {
-  padding: 5px;
-  width: 100%;
-}
-
-.avatar-preview {
-  width: 100px;
-  height: 100px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  align-self: flex-start;
-}
-
-.avatar-preview img {
-  width: 100%;
-  height: auto;
-}
-
-.avatar-section {
-  margin-bottom: 10px;
-}
-
-button {
-  background-color: #2088ff;
-  color: white;
-  padding: 10px;
+.message-item {
   cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  margin-bottom: 20px;
+  padding: 10px 0;
 }
 
-button:hover {
-  background-color: #0e7bea;
+.message-item:hover {
+  background-color: #f5f5f5;
+}
+
+.message-detail {
+  flex: 1;
+  padding-left: 20px;
 }

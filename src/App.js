@@ -6,6 +6,7 @@ import About from './components/About';
 import Camera from './components/Camera';
 import Navbar from './components/Navbar';
 import Message from './components/Message';
+import "@aws-amplify/ui-react/styles.css";
 
 function App() {
   return (

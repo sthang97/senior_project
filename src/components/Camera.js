@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import './Camera.css';
 
 const Camera = () => {
-  const [feverDetected, setFeverDetected] = useState(false);
-  const [message, setMessage] = useState('');
+  const [feverDetected1, setFeverDetected1] = useState(false);
+  const [feverDetected2, setFeverDetected2] = useState(false);
+  const [message1, setMessage1] = useState('');
+  const [message2, setMessage2] = useState('');
   const [lastFetchTime, setLastFetchTime] = useState(0);
   const navigate = useNavigate();
 
@@ -27,28 +29,37 @@ const Camera = () => {
 
         const latestTime = latestDataTime(data);
 
-        let feverFound = false;
+        let feverFound1 = false;
+        let feverFound2 = false;
 
         data.forEach((item) => {
-          if (item.payload.includes('Fever detected') && parseInt(item.time) === latestTime) {
-            feverFound = true;
-            setMessage(item.payload);
-            return;
+          if (item.payload.includes('CAMID-1') && parseInt(item.time) === latestTime) {
+            feverFound1 = true;
+            setMessage1(item.payload);
+          } else if (item.payload.includes('CAMID-2') && parseInt(item.time) === latestTime) {
+            feverFound2 = true;
+            setMessage2(item.payload);
           }
         });
 
-        if (feverFound && latestTime > lastFetchTime) {
-          setFeverDetected(true);
-          setLastFetchTime(latestTime);
+        if (feverFound1 && latestTime > lastFetchTime) {
+          setFeverDetected1(true);
         } else {
-          setFeverDetected(false);
+          setFeverDetected1(false);
         }
+
+        if (feverFound2 && latestTime > lastFetchTime) {
+          setFeverDetected2(true);
+        } else {
+          setFeverDetected2(false);
+        }
+
+        setLastFetchTime(latestTime);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
-    // Fetch data every 5 seconds
     const interval = setInterval(() => {
       fetchData();
     }, 5000);
@@ -58,9 +69,15 @@ const Camera = () => {
     };
   }, [lastFetchTime]);
 
-  const handleClick = () => {
-    if (feverDetected) {
-      navigate('/message', { state: { message } });
+  const handleClick1 = () => {
+    if (feverDetected1) {
+      navigate('/message', { state: { message: message1 } });
+    }
+  };
+
+  const handleClick2 = () => {
+    if (feverDetected2) {
+      navigate('/message', { state: { message: message2 } });
     }
   };
 
@@ -68,15 +85,16 @@ const Camera = () => {
     <div className="camera">
       <img src="/FloorPlanMap.png" alt="Floor Plan" className="floorplan" />
       <div
-        className={`camera-indicator ${feverDetected ? 'fever-detected' : 'idle'}`}
-        onClick={handleClick}
-        style={{ top: '31%', left: '42%' }}
+        className={`camera-indicator ${feverDetected1 ? 'fever-detected' : 'idle'}`}
+        onClick={handleClick1}
+        style={{ top: '32%', left: '30%' }}
       ></div>
       <div
-        className="camera-indicator idle"
+        className={`camera-indicator ${feverDetected2 ? 'fever-detected' : 'idle'}`}
+        onClick={handleClick2}
         style={{ top: '20%', left: '10%' }}
       ></div>
-      <div
+            <div
         className="camera-indicator idle"
         style={{ top: '10%', left: '60%' }}
       ></div>
@@ -85,3 +103,4 @@ const Camera = () => {
 };
 
 export default Camera;
+

@@ -1,112 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { Auth } from 'aws-amplify';
 import './Dashboard.css';
 
-const Account = () => {
-  const [user, setUser] = useState(null);
-  const [avatar, setAvatar] = useState(null);
-  const [avatarFile, setAvatarFile] = useState(null);
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+const Dashboard = () => {
+  const [messages, setMessages] = useState([]);
+  const [selectedMessage, setSelectedMessage] = useState(null);
+
+  const fetchMessages = async () => {
+    const apiUrl = 'https://ndm4ne7wwc.execute-api.us-east-1.amazonaws.com/dev/iotdata';
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    // Sort messages by timestamp in descending order
+    const sortedData = data.sort((a, b) => parseInt(b.time) - parseInt(a.time));
+    setMessages(sortedData);
+  };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userInfo = await Auth.currentUserInfo();
-        setUser(userInfo);
-
-        const storedAvatar = localStorage.getItem('avatar');
-        if (storedAvatar) {
-          setAvatar(storedAvatar);
-        }
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      }
-    };
-
-    fetchUser();
+    fetchMessages();
   }, []);
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result);
-      };
-      reader.readAsDataURL(file);
-      setAvatarFile(file);
-    }
+  const handleClick = (index) => {
+    setSelectedMessage(messages[index].payload);
   };
 
-  const handleAvatarSubmit = () => {
-    if (avatarFile) {
-      // Save avatar URL to local storage
-      localStorage.setItem('avatar', avatar);
-    }
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(parseInt(timestamp));
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+
+    return `Date: ${month}-${day}-${year} Time: ${hours}-${minutes}-${seconds}`;
   };
-
-  const handleChangePassword = async () => {
-    if (newPassword !== confirmNewPassword) {
-      alert('New password and confirmation do not match');
-      return;
-    }
-
-    try {
-      const currentUser = await Auth.currentAuthenticatedUser();
-      await Auth.changePassword(currentUser, currentPassword, newPassword);
-      alert('Password changed successfully');
-    } catch (error) {
-      console.error('Error changing password:', error);
-      alert('Error changing password. Please check your current password and try again.');
-    }
-  };
-
-  if (!user) {
-    return <div>Loading...</div>;
-  }
 
   return (
-    <div className="account-container">
-      <h1>User Account</h1>
-      <div className="account-details">
-        {avatar && (
-          <div className="avatar-preview">
-            <img src={avatar} alt="User avatar" />
-          </div>
+    <div className="dashboard">
+      <div className="message-list">
+        <ul>
+          {messages.map((msg, index) => (
+            <li key={index} onClick={() => handleClick(index)}>
+              {formatTimestamp(msg.time)}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="message-display">
+        {selectedMessage ? (
+          <p>{selectedMessage}</p>
+        ) : (
+          <p>Please select a message from the list</p>
         )}
-        <div className="text-holder">
-          <label>Username:</label>
-          <input type="text" readOnly value={user.username} />
-        </div>
-        <div className="text-holder">
-          <label>Email:</label>
-          <input type="text" readOnly value={user.attributes.email} />
-        </div>
-        <div className="avatar-section">
-          <label>Avatar:</label>
-          <input type="file" accept="image/*" onChange={handleAvatarChange} />
-        </div>
-        <button onClick={handleAvatarSubmit}>Submit Avatar</button>
-        <div className="text-holder">
-          <label>Current Password:</label>
-          <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
-        </div>
-        <div className="text-holder">
-          <label>New Password:</label>
-          <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-        </div>
-        <div className="text-holder">
-          <label>Confirm New Password:</label>
-          <input type="password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
-        </div>
-        <button onClick={handleChangePassword}>Update Password</button>
       </div>
     </div>
   );
 };
 
-export default Account;
-
-       
+export default Dashboard;
